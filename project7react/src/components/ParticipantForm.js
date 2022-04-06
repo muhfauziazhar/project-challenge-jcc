@@ -30,7 +30,7 @@ const ParticipantForm = () => {
     // console.log("note: ", getNote);
     axios({
       method: "POST",
-      url: "http://localhost:3333/participants",
+      url: "https://proma-api.herokuapp.com/participants",
       data: {
         fullName: getFullName,
         businessName: getBusinessName,
@@ -60,34 +60,37 @@ const ParticipantForm = () => {
               </label>
               <input
                 type="text"
+                placeholder="contoh: Muhammad Fauzi Azhar"
                 className="form-control"
                 required="required"
                 onChange={(e) => inputHandlerFullName(e.target.value)}
               />
             </div>
             <div className="col-sm m-10">
-              <label htmlFor="phone" className="required">
-                Nomor Telepon
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                onChange={(e) => inputHandlerPhone(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm m-10">
               <label htmlFor="bus" className="required">
                 Nama Bisnis
               </label>
               <input
                 type="text"
+                placeholder="contoh: Maju Terus Jaya"
                 className="form-control"
                 required="required"
                 onChange={(e) =>
                   inputHandlerBusinessName(e.target.value)
                 }
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-sm m-10">
+              <label htmlFor="phone" className="required">
+                Nomor Telepon
+              </label>
+              <input
+                type="text"
+                placeholder="contoh: +6289545755508"
+                className="form-control"
+                onChange={(e) => inputHandlerPhone(e.target.value)}
               />
             </div>
             <div className="col-sm m-10">
@@ -96,6 +99,7 @@ const ParticipantForm = () => {
               </label>
               <input
                 type="email"
+                placeholder="contoh: emailkamu@gmail.com"
                 className="form-control"
                 onChange={(e) => inputHandlerEmail(e.target.value)}
               />
@@ -103,6 +107,7 @@ const ParticipantForm = () => {
           </div>
           <div className="row">
             <div className="col-sm m-10">
+              <p color="#FF0000">*wajib diisi</p>
               <button
                 className="btn btn-danger"
                 type="button"

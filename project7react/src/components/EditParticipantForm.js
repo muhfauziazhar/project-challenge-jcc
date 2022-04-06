@@ -13,7 +13,7 @@ const EditParticipantForm = () => {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `http://localhost:3333/participants/${id}`,
+      url: `https://proma-api.herokuapp.com/participants/${id}`,
     }).then((results) => {
       const fullname = results.data.payload.full_name;
       const businessname = results.data.payload.business_name;
@@ -49,8 +49,8 @@ const EditParticipantForm = () => {
     // console.log("phone: ", getPhone);
     // console.log("note: ", getNote);
     axios({
-      method: "put",
-      url: `http://localhost:3001/api/contacts/${id}`,
+      method: "PUT",
+      url: `https://proma-api.herokuapp.com/participants/${id}`,
       data: {
         fullName: getFullName,
         businessName: getBusinessName,
@@ -60,7 +60,7 @@ const EditParticipantForm = () => {
     }).then((result) => {
       if (result.data) {
         alert("data berhasil update !");
-        window.location.href = "/list-contact";
+        window.location.href = "/list-participant";
       } else {
         alert("data gagal di Update!");
         window.location.reload();

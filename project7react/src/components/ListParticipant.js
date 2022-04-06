@@ -4,25 +4,40 @@ import axios from "axios";
 
 const ListParticipant = () => {
   const [getDatas, setDatas] = useState([]);
-  const [getCert, setCert] = useState("");
   const sortedData = getDatas.sort(function (a, b) {
     return a.id - b.id;
   });
 
-  //ketika reload dapat data dibwah
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:3333/participants",
+      url: "https://proma-api.herokuapp.com/participants",
     }).then((results) => {
       setDatas(results.data.payload);
     });
   }, []);
 
+  const printCert = (id) => {
+    axios({
+      method: "GET",
+      url: `https://proma-api.herokuapp.com/participants/${id}/certificate`,
+    }).then((results) => {
+      const printDoc =
+        document.getElementById("printed_frame").contentWindow;
+      printDoc.document.open();
+      printDoc.document.write(results.data);
+      printDoc.document.close();
+      printDoc.focus();
+      setTimeout(() => {
+        printDoc.print();
+      }, 1500);
+    });
+  };
+
   const deleteProduct = (id) => {
     axios({
       method: "delete",
-      url: `http://localhost:3333/participants/${id}`,
+      url: `https://proma-api.herokuapp.com/participants/${id}`,
     }).then((result) => {
       if (!result.data.affectedRows) {
         alert("data berhasil di hapus !");
@@ -35,7 +50,7 @@ const ListParticipant = () => {
   };
 
   return (
-    <div>
+    <>
       <NavigationBar />
       <div style={{ marginTop: 65 }}>
         <div className="container-fluid">
@@ -51,7 +66,7 @@ const ListParticipant = () => {
                       <th>Nama Bisnis</th>
                       <th>Email</th>
                       <th>Nomor Telepon</th>
-                      <th>Catatan</th>
+                      <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -92,6 +107,23 @@ const ListParticipant = () => {
                                   ❌
                                 </span>
                               </div>
+                              <div className="col-3">
+                                <button
+                                  className="btn btn-danger"
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => {
+                                    if (
+                                      window.confirm(
+                                        "Apakah anda yakin untuk print participant ini ?"
+                                      ) === true
+                                    ) {
+                                      printCert(data.id);
+                                    }
+                                  }}
+                                >
+                                  Print
+                                </button>
+                              </div>
                             </div>
                           </td>
                         </tr>
@@ -104,7 +136,14 @@ const ListParticipant = () => {
           </div>
         </div>
       </div>
-    </div>
+      <iframe
+        id="printed_frame"
+        style={{
+          display: "none",
+        }}
+        title={`Cetak SBG`}
+      />
+    </>
   );
 };
 
