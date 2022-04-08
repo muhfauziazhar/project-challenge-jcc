@@ -33,7 +33,7 @@ const EditParticipantForm = () => {
   };
 
   const inputHandlerBusinessName = (busname) => {
-    return setFullName(busname);
+    return setBusinessName(busname);
   };
 
   const inputHandlerPhone = (phone) => {
