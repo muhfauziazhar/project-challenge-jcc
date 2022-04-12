@@ -34,6 +34,23 @@ const ListParticipant = () => {
     });
   };
 
+  const printName = (id) => {
+    axios({
+      method: "GET",
+      url: `https://proma-api.herokuapp.com/participants/${id}/nametag`,
+    }).then((results) => {
+      const printDoc =
+        document.getElementById("printed_frame").contentWindow;
+      printDoc.document.open();
+      printDoc.document.write(results.data);
+      printDoc.document.close();
+      printDoc.focus();
+      setTimeout(() => {
+        printDoc.print();
+      }, 1500);
+    });
+  };
+
   const deleteProduct = (id) => {
     axios({
       method: "delete",
@@ -79,52 +96,72 @@ const ListParticipant = () => {
                           <td>{data.email}</td>
                           <td>{data.phone}</td>
                           <td>
-                            <div className="row">
-                              <div className="col-3">
-                                <span
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() =>
-                                    (window.location.href = `/edit-participant/${data.id}`)
-                                  }
-                                >
-                                  🔍
-                                </span>
-                              </div>
-                              <div className="col-3">
-                                <span
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => {
-                                    if (
-                                      window.confirm(
-                                        "Apakah anda yakin untuk menghapus ini ?"
-                                      ) === true
-                                    ) {
-                                      deleteProduct(data.id);
-                                    } else {
-                                    }
-                                  }}
-                                >
-                                  ❌
-                                </span>
-                              </div>
-                              <div className="col-3">
-                                <button
-                                  className="btn btn-danger"
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => {
-                                    if (
-                                      window.confirm(
-                                        "Apakah anda yakin untuk print participant ini ?"
-                                      ) === true
-                                    ) {
-                                      printCert(data.id);
-                                    }
-                                  }}
-                                >
-                                  Print
-                                </button>
-                              </div>
-                            </div>
+                            <button
+                              className="btn btn-danger mx-1"
+                              style={{
+                                cursor: "pointer",
+                              }}
+                              onClick={() =>
+                                (window.location.href = `/edit-participant/${data.id}`)
+                              }
+                            >
+                              Edit
+                            </button>
+                            <button
+                              className="btn btn-danger mx-1"
+                              style={{
+                                cursor: "pointer",
+                                marginLeft: "7px",
+                              }}
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    "Apakah anda yakin untuk menghapus ini ?"
+                                  ) === true
+                                ) {
+                                  deleteProduct(data.id);
+                                } else {
+                                }
+                              }}
+                            >
+                              Delete
+                            </button>
+                            <button
+                              className="btn btn-primary mx-1"
+                              style={{
+                                cursor: "pointer",
+                                marginLeft: "7px",
+                              }}
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    "Apakah anda yakin untuk print participant ini ?"
+                                  ) === true
+                                ) {
+                                  printCert(data.id);
+                                }
+                              }}
+                            >
+                              Certificate
+                            </button>
+                            <button
+                              className="btn btn-primary mx-1"
+                              style={{
+                                cursor: "pointer",
+                                marginLeft: "7px",
+                              }}
+                              onClick={() => {
+                                if (
+                                  window.confirm(
+                                    "Apakah anda yakin untuk print participant ini ?"
+                                  ) === true
+                                ) {
+                                  printName(data.id);
+                                }
+                              }}
+                            >
+                              Name Tag
+                            </button>
                           </td>
                         </tr>
                       );

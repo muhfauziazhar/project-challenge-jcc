@@ -19,7 +19,6 @@ const EditParticipantForm = () => {
       const businessname = results.data.payload.business_name;
       const email = results.data.payload.email;
       const phone = results.data.payload.phone;
-      const id = results.data.payload.id;
 
       setFullName(fullname);
       setBusinessName(businessname);
@@ -45,9 +44,6 @@ const EditParticipantForm = () => {
   };
 
   function updateContact() {
-    // console.log("name: ", getFullName);
-    // console.log("phone: ", getPhone);
-    // console.log("note: ", getNote);
     axios({
       method: "PUT",
       url: `https://proma-api.herokuapp.com/participants/${id}`,
@@ -87,19 +83,6 @@ const EditParticipantForm = () => {
               />
             </div>
             <div className="col-sm m-10">
-              <label htmlFor="phone" className="required">
-                Nomor Telepon
-              </label>
-              <input
-                type="string"
-                className="form-control"
-                value={getPhone}
-                onChange={(e) => inputHandlerPhone(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-sm m-10">
               <label htmlFor="busname" className="required">
                 Nama Bisnis
               </label>
@@ -113,9 +96,22 @@ const EditParticipantForm = () => {
                 }
               />
             </div>
+          </div>
+          <div className="row">
+            <div className="col-sm m-10">
+              <label htmlFor="phone" className="required">
+                Nomor Telepon
+              </label>
+              <input
+                type="string"
+                className="form-control"
+                value={getPhone}
+                onChange={(e) => inputHandlerPhone(e.target.value)}
+              />
+            </div>
             <div className="col-sm m-10">
               <label htmlFor="email" className="required">
-                Nomor Telepon
+                Email
               </label>
               <input
                 type="string"
